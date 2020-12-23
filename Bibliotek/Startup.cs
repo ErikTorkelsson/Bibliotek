@@ -27,10 +27,14 @@ namespace Bibliotek
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // lägger till db context och gör så att jag kan använda min connection string
             services.AddDbContext<Context>(x => x.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
+            
+            // Här har jag lagt till kod som gör att vi ska slippa referens loopar och null värden ska ignoreras 
             services.AddControllers()
-             .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+             .AddNewtonsoftJson(x => { x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                 x.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+             });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

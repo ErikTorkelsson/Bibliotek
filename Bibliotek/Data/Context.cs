@@ -16,6 +16,8 @@ namespace Bibliotek.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Här sätter jag ut nycklarna till kopplingstabellen bookauthor
+
             modelBuilder.Entity<BookAuthor>().HasKey(ba => new { ba.BookId, ba.AuthorId });
 
             modelBuilder.Entity<BookAuthor>()
@@ -28,14 +30,9 @@ namespace Bibliotek.Data
               .WithMany(ba => ba.BookAuthors)
               .HasForeignKey(ba => ba.AuthorId);
 
-            modelBuilder.Entity<Rental>()
-            .Property(l => l.RentalDate)
-            .HasDefaultValueSql("GETDATE()");
-
-            modelBuilder.Entity<Rental>()
-            .Property(l => l.ReturnDate)
-            .HasDefaultValueSql("DATEADD(MONTH, 1, GETDATE())");
         }
+
+        // Det här är referenser som används för att lagra data till de olika modellerna.
 
         public DbSet<Author> Authors { get; set; }
 
@@ -43,8 +40,10 @@ namespace Bibliotek.Data
 
         public DbSet<Card> Cards { get; set; }
 
-        public DbSet<Rental> Loans { get; set; }
+        public DbSet<Rental> Rentals { get; set; }
 
         public DbSet<BookAuthor> BookAuthors { get; set; }
+
+        public DbSet<Inventory> Inventories { get; set; }
     }
 }

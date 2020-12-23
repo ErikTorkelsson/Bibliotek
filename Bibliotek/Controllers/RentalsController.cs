@@ -23,16 +23,17 @@ namespace Bibliotek.Controllers
 
         // GET: api/Rentals
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Rental>>> GetLoans()
+        public async Task<ActionResult<IEnumerable<Rental>>> GetRentals()
         {
-            return await _context.Loans.ToListAsync();
+            return await _context.Rentals.ToListAsync();
         }
 
         // GET: api/Rentals/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Rental>> GetRental(int id)
         {
-            var rental = await _context.Loans.FindAsync(id);
+            var rental = await _context.Rentals.Include(c => c.Inventory).Include(b => b.Card)
+                .FirstOrDefaultAsync(c => c.RentalId == id);
 
             if (rental == null)
             {
@@ -74,13 +75,20 @@ namespace Bibliotek.Controllers
             return NoContent();
         }
 
+
+
         // POST: api/Rentals
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
         public async Task<ActionResult<Rental>> PostRental(Rental rental)
         {
-            _context.Loans.Add(rental);
+            var Inventory = await _context.Inventories.FirstOrDefaultAsync(b => b.InventoryId == rental.InventoryId);
+
+            //Inventory.Rented = true;
+
+            _context.Entry(Inventory).State = EntityState.Modified;
+            _context.Rentals.Add(rental);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetRental", new { id = rental.RentalId }, rental);
@@ -90,13 +98,13 @@ namespace Bibliotek.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Rental>> DeleteRental(int id)
         {
-            var rental = await _context.Loans.FindAsync(id);
+            var rental = await _context.Rentals.FindAsync(id);
             if (rental == null)
             {
                 return NotFound();
             }
 
-            _context.Loans.Remove(rental);
+            _context.Rentals.Remove(rental);
             await _context.SaveChangesAsync();
 
             return rental;
@@ -104,7 +112,7 @@ namespace Bibliotek.Controllers
 
         private bool RentalExists(int id)
         {
-            return _context.Loans.Any(e => e.RentalId == id);
+            return _context.Rentals.Any(e => e.RentalId == id);
         }
     }
 }
