@@ -31,10 +31,12 @@ namespace Bibliotek
             services.AddDbContext<Context>(x => x.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             
             // Här har jag lagt till kod som gör att vi ska slippa referens loopar och null värden ska ignoreras 
-            services.AddControllers()
+            services.AddControllersWithViews()
              .AddNewtonsoftJson(x => { x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                  x.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
              });
+
+            services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,7 +55,9 @@ namespace Bibliotek
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=RentalViews}/{action=Index}/{id?}");
             });
         }
     }

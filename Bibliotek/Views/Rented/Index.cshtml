@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Bibliotek.Models.Card>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Rentals">Alla lån</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Låntagare
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Mobilnummer
+            </th>
+            <th>
+                Försenade böcker
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            @if (item.NotReturnedBooks > 0)
+            {
+                <tr>
+                    <td>
+                        @{
+                            var fullName = item.FirstName + " " + item.LastName;
+                            @Html.DisplayFor(m => fullName)
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TelephoneNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NotReturnedBooks)
+                    </td>
+                    <td>
+                        <a asp-action="Books" asp-route-id="@item.CardId">Visa böcker</a>
+                    </td>
+                </tr>
+            }
+
+        }
+    </tbody>
+</table>

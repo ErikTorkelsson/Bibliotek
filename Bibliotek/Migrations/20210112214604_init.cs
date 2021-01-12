@@ -13,8 +13,8 @@ namespace Bibliotek.Migrations
                 {
                     AuthorId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true)
+                    FirstName = table.Column<string>(nullable: false),
+                    LastName = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -27,8 +27,8 @@ namespace Bibliotek.Migrations
                 {
                     BookId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(nullable: true),
-                    Isbn = table.Column<string>(nullable: true),
+                    Title = table.Column<string>(nullable: false),
+                    Isbn = table.Column<string>(nullable: false),
                     YearOfPublication = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -42,8 +42,10 @@ namespace Bibliotek.Migrations
                 {
                     CardId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true)
+                    FirstName = table.Column<string>(nullable: false),
+                    LastName = table.Column<string>(nullable: false),
+                    Email = table.Column<string>(nullable: true),
+                    TelephoneNumber = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -100,9 +102,10 @@ namespace Bibliotek.Migrations
                     RentalId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CardId = table.Column<int>(nullable: false),
+                    InventoryId = table.Column<int>(nullable: false),
                     RentalDate = table.Column<DateTime>(nullable: false),
-                    ReturnDate = table.Column<DateTime>(nullable: true),
-                    InventoryId = table.Column<int>(nullable: false)
+                    RentedUntilDate = table.Column<DateTime>(nullable: false),
+                    ReturnDate = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {

@@ -19,6 +19,8 @@ namespace Bibliotek.Models
 
         public DateTime RentalDate { get; set; }
 
+        public DateTime RentedUntilDate { get; set; }
+
         public DateTime? ReturnDate { get; set; }
  
         public bool Returned { get { return ReturnDate != null; } }

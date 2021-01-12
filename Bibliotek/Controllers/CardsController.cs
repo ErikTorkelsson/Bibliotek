@@ -25,7 +25,7 @@ namespace Bibliotek.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Card>>> GetCards()
         {
-            return await _context.Cards.ToListAsync();
+            return await _context.Cards.Include(r => r.Rentals).ToListAsync();
         }
 
         // GET: api/Cards/5
@@ -139,7 +139,8 @@ namespace Bibliotek.Controllers
             {
                 CardId = cardId,
                 InventoryId = availableInv.InventoryId,
-                RentalDate = DateTime.Now
+                RentalDate = DateTime.Now,
+                RentedUntilDate = DateTime.Now.AddMonths(1)
             };
 
             _context.Rentals.Add(rental);
@@ -185,7 +186,7 @@ namespace Bibliotek.Controllers
 
             await _context.SaveChangesAsync();
 
-            return Ok($"Customer {card.FirstName} return the book {rental.Inventory.Book.Title} at {rental.RentalDate}");
+            return Ok($"Customer {card.FirstName} return the book {rental.Inventory.Book.Title} at {rental.ReturnDate}");
         }
     }
 }

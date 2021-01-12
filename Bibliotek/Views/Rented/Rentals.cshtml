@@ -1,0 +1,75 @@
+﻿@model IEnumerable<Bibliotek.Models.Rental>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Index">Låntagare</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Låntagare
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Mobilnummer
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Inventory)
+            </th>
+            <th>
+                Låndatum
+            </th>
+            <th>
+                Utlånad till
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReturnDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @{
+                    var fullName = item.Card.FirstName + " " + item.Card.LastName;
+                    @Html.DisplayFor(m => fullName)
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Card.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Card.TelephoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Inventory.Book.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RentalDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RentedUntilDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReturnDate)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.RentalId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.RentalId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.RentalId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

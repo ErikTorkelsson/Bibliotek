@@ -25,7 +25,7 @@ namespace Bibliotek.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Book>>> GetBooks()
         {
-            return await _context.Books.ToListAsync();
+            return await _context.Books.Include(ba => ba.BookAuthors).ThenInclude(a => a.Author).ToListAsync();
         }
 
         // GET: api/Books/5

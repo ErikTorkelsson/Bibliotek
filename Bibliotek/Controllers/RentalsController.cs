@@ -32,7 +32,7 @@ namespace Bibliotek.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Rental>> GetRental(int id)
         {
-            var rental = await _context.Rentals.Include(c => c.Inventory).Include(b => b.Card)
+            var rental = await _context.Rentals.Include(c => c.Inventory).ThenInclude(b => b.Book).Include(b => b.Card)
                 .FirstOrDefaultAsync(c => c.RentalId == id);
 
             if (rental == null)

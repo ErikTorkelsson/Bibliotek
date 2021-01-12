@@ -1,0 +1,66 @@
+﻿@model IEnumerable<Bibliotek.Models.Rental>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Böcker</h2>
+
+<p>
+    <a asp-action="Index">Låntagare</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Titel
+            </th>
+            <th>
+                Författare
+            </th>
+            <th>
+                Isbn
+            </th>
+            <th>
+                Lånades ut datum
+            </th>
+            <th>
+                Lånad till datum
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Inventory.Book.Title)
+                </td>
+                <td>
+                    @{
+                        var author = item.Inventory.Book.BookAuthors.Select(f => f.Author.FirstName + " " + f.Author.LastName);
+                        string authorwithcommas = String.Join(", ", author);
+                        @Html.DisplayFor(a => authorwithcommas)
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Inventory.Book.Isbn)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RentalDate)
+                </td>
+                <td>
+                    @{
+                        var date = item.RentedUntilDate.ToShortDateString();
+                        @Html.DisplayFor(modelItem => date)
+                    }                   
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.CardId">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
