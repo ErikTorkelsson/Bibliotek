@@ -52,6 +52,8 @@ Databasen byggs efter hur modellerna i Apiet är uppbyggt.
 
 I projektet finns en modell för varje Entitet, dvs Bok, författare, lånekort, lån, index samt en modell för kopplingstabbelen mellan bok och författare. Kopplingstabellen BookAuthor är den enda many to many relationen i API:et, och eftersom vi använder v.3.1 av asp.net så sätts relationens nycklar I modelbuilder metoden i dbcontext filen. De andra modellerna har one to many relationer och nycklarna skapas automatiskt genom navigations propertiesen som ligger i modellerna. 
 
+![](Images/erd.png)
+
 ##### Controllers 
 
 Alla modeller i projektet har varsin API controller med CRUD funktionallitet. Alla är scuffoldade med Entity Framework och ser i princip likadana ut. De skickar ut och tar emot JSON data. 
