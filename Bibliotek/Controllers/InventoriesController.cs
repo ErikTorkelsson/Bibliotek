@@ -82,6 +82,13 @@ namespace Bibliotek.Controllers
         [HttpPost]
         public async Task<ActionResult<Inventory>> PostInventory(Inventory inventory)
         {
+            var books = await _context.Books.ToListAsync();
+
+            if(books.FirstOrDefault(b => b.BookId == inventory.BookId) == null)
+            {
+                return BadRequest("Book Id does not exist...");
+            }
+
             _context.Inventories.Add(inventory);
             await _context.SaveChangesAsync();
 

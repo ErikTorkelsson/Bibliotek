@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Alla försenade lån</h2>
 
 <p>
     <a asp-action="Index">Låntagare</a>
@@ -17,13 +17,7 @@
                 Låntagare
             </th>
             <th>
-                Email
-            </th>
-            <th>
-                Mobilnummer
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Inventory)
+                Bok
             </th>
             <th>
                 Låndatum
@@ -31,9 +25,7 @@
             <th>
                 Utlånad till
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ReturnDate)
-            </th>
+
             <th></th>
         </tr>
     </thead>
@@ -47,27 +39,20 @@
                 }
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Card.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Card.TelephoneNumber)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Inventory.Book.Title)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.RentalDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.RentedUntilDate)
+                @{
+                    var date = item.RentedUntilDate.ToShortDateString();
+                    @Html.DisplayFor(modelItem => date)
+                }
             </td>
+
             <td>
-                @Html.DisplayFor(modelItem => item.ReturnDate)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.RentalId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.RentalId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.RentalId">Delete</a>
+                <a asp-action="Details" asp-route-id="@item.CardId">Visa låntagare</a> |
             </td>
         </tr>
 }

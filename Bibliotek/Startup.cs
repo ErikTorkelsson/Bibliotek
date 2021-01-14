@@ -57,7 +57,7 @@ namespace Bibliotek
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=RentalViews}/{action=Index}/{id?}");
+                    pattern: "{controller=Rented}/{action=Index}/{id?}");
             });
         }
     }

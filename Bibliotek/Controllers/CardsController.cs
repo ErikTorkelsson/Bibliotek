@@ -140,7 +140,7 @@ namespace Bibliotek.Controllers
                 CardId = cardId,
                 InventoryId = availableInv.InventoryId,
                 RentalDate = DateTime.Now,
-                RentedUntilDate = DateTime.Now.AddMonths(1)
+                RentedUntilDate = DateTime.Now.Date.AddMonths(1)
             };
 
             _context.Rentals.Add(rental);

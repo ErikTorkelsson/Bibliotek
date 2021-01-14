@@ -36,7 +36,7 @@ namespace Bibliotek.Controllers
 
             if (book == null)
             {
-                return NotFound();
+                return NotFound("Could not find book");
             }
 
             return book;
@@ -50,7 +50,7 @@ namespace Bibliotek.Controllers
         {
             if (id != book.BookId)
             {
-                return BadRequest();
+                return BadRequest("Could not find book");
             }
 
             _context.Entry(book).State = EntityState.Modified;

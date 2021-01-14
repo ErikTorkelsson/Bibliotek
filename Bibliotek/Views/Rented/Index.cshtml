@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Låntagare med försenade lån</h2>
 
 <p>
     <a asp-action="Rentals">Alla lån</a>
@@ -28,10 +28,11 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
-        {
-            @if (item.NotReturnedBooks > 0)
+        @{
+            var ordered = Model.Where(c => c.NotReturnedBooks > 0).OrderByDescending(c => c.NotReturnedBooks).ToList();
+            foreach (var item in ordered)
             {
+
                 <tr>
                     <td>
                         @{
@@ -52,8 +53,8 @@
                         <a asp-action="Books" asp-route-id="@item.CardId">Visa böcker</a>
                     </td>
                 </tr>
-            }
 
+            }
         }
     </tbody>
 </table>

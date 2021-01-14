@@ -36,7 +36,7 @@ namespace Bibliotek.Controllers
 
             if (author == null)
             {
-                return NotFound();
+                return NotFound("Cannot Find Author");
             }
 
             return author;
@@ -50,7 +50,7 @@ namespace Bibliotek.Controllers
         {
             if (id != author.AuthorId)
             {
-                return BadRequest();
+                return BadRequest("Wrong Author Id");
             }
 
             _context.Entry(author).State = EntityState.Modified;
@@ -80,10 +80,12 @@ namespace Bibliotek.Controllers
         [HttpPost]
         public async Task<ActionResult<Author>> PostAuthor(Author author)
         {
-            _context.Authors.Add(author);
-            await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetAuthor", new { id = author.AuthorId }, author);
+                _context.Authors.Add(author);
+                await _context.SaveChangesAsync();
+
+                return CreatedAtAction("GetAuthor", new { id = author.AuthorId }, author);
+
         }
 
         // DELETE: api/Authors/5

@@ -39,10 +39,9 @@
                     @Html.DisplayFor(modelItem => item.Inventory.Book.Title)
                 </td>
                 <td>
-                    @{
-                        var author = item.Inventory.Book.BookAuthors.Select(f => f.Author.FirstName + " " + f.Author.LastName);
-                        string authorwithcommas = String.Join(", ", author);
-                        @Html.DisplayFor(a => authorwithcommas)
+                    @{                       
+                        var authors = String.Join(", ", item.Inventory.Book.BookAuthors.Select(f => f.Author.FirstName + " " + f.Author.LastName));
+                        @Html.DisplayFor(a => authors)
                     }
                 </td>
                 <td>
@@ -58,7 +57,7 @@
                     }                   
                 </td>
                 <td>
-                    <a asp-action="Details" asp-route-id="@item.CardId">Details</a>
+                    <a asp-action="Details" asp-route-id="@item.CardId">Visa låntagare</a>
                 </td>
             </tr>
         }

@@ -36,7 +36,7 @@ namespace Bibliotek.Controllers
 
             if (bookAuthor == null)
             {
-                return NotFound();
+                return NotFound("Could ");
             }
 
             return bookAuthor;
